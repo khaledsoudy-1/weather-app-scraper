@@ -21,6 +21,17 @@ def get_current_weather():
     
     pprint(weather_data)
     
-get_current_weather()
+    # Display more readable data for users.
+    print(f"\nCurrent Weather for '{city_name.title()}' City - {weather_data['sys']['country']}:")
+    print(f"Temperature : {weather_data['main']['temp']}°C")
+    print(f"Feels like  : {weather_data['main']['feels_like']}°C")
+    print(f"Weather     : {weather_data['weather'][0]['description'].capitalize()}")
+
+    
+if __name__ == '__main__':
+    get_current_weather()
 
 
+# NOTE: The Code for successful request ==> 'cod': 200
+# NOTE: Which means that any other code will refer to an error along with an error message
+# NOTE: For Example: If you pass any wrong city name.
