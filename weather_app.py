@@ -2,6 +2,7 @@
 import os
 from dotenv import load_dotenv
 import requests
+from pprint import pprint
 
 # Load environment variables
 load_dotenv()
@@ -18,7 +19,7 @@ def get_current_weather():
     # Retrieve and display the weather data
     weather_data = requests.get(request_url).json()
     
-    print(weather_data)
+    pprint(weather_data)
     
 get_current_weather()
 
