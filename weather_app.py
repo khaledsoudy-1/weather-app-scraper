@@ -8,8 +8,16 @@ load_dotenv()
 
 
 def get_current_weather(city="Cairo"):
+    
+    # Retrieve API_KEY from the environment variable file
+    api_key = os.getenv('API_KEY')
+    
+    # Check if API_KEY exists
+    if not api_key:
+        raise ValueError("API_KEY is missing. Please set it in your .env file.")
+    
     # Create the request URL using the user's input and API key from environment variables
-    request_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={os.getenv('API_KEY')}&units=metric"
+    request_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     
     try:
         # Retrieve and display the weather data
