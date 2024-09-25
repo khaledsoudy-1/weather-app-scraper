@@ -1,9 +1,8 @@
-
 # 🌤️ Weather App
 
 ## 📖 Description
 
-Get real-time weather information for any city with this sleek Python-based Weather Conditions App. Simply enter a city name and receive current temperature, "feels like" temperature, and weather description!
+Get real-time weather information for any city with this sleek Python-based Weather Conditions App. This project includes both a command-line interface and a web application built with Flask. Simply enter a city name and receive current temperature, "feels like" temperature, and weather description!
 
 ## 🌡️ Features
 
@@ -12,11 +11,13 @@ Get real-time weather information for any city with this sleek Python-based Weat
 - "Feels like" temperature
 - Current weather description
 - Error handling for invalid city names
+- Web interface using Flask
+- Command-line interface option
 
 ## 🚀 How to Use
 
 1. **Set up your environment**:  
-   Make sure you have Python installed on your system and the required packages installed. The `requirements.txt` file includes the necessary libraries.
+   Make sure you have Python installed on your system.
    
 2. **Obtain an API Key**:  
    Sign up on [OpenWeather](https://openweathermap.org/) and get your free API key.
@@ -34,35 +35,57 @@ Get real-time weather information for any city with this sleek Python-based Weat
    ```
 
 5. **Run the App**:  
-   Execute the app using the following command:
-   ```bash
-   python weather_app.py
-   ```
-   Enter the name of a city when prompted to get the current weather.
+   - For the web application, execute:
+     ```bash
+     python main.py
+     ```
+     Then open a web browser and go to `http://localhost:8000`.
+   
+   - For the command-line interface, run:
+     ```bash
+     python weather_app.py
+     ```
+     Enter the name of a city when prompted to get the current weather.
 
 ## 💻 Code Highlights
 
-### Environment Variables
-We use `python-dotenv` to securely load API keys:
+### Web Application (Flask)
+We use Flask to create a web interface for the weather app:
 
 ```python
-from dotenv import load_dotenv
-
-load_dotenv()
+@app.route('/weather')
+def get_weather():
+    city = request.args.get('city')
+    weather_data = get_current_weather(city)
+    # ... process and render data
 ```
 
-### API Request
-We use the `requests` library to fetch real-time weather data from the OpenWeather API:
+### Command-Line Interface
+The `weather_app.py` script can be run directly for a CLI experience:
+
 ```python
-weather_data = requests.get(request_url).json()
+if __name__ == '__main__':
+    city_name = input("Please, enter a city name: ")
+    weather_data = get_current_weather(city_name)
+    # ... display weather information
 ```
-The data is then parsed and displayed in a readable format for users.
+
+### Production Server
+We use Waitress as a production WSGI server:
+
+```python
+from waitress import serve
+
+if __name__ == "__main__":
+    serve(app, host="0.0.0.0", port=8000)
+```
 
 ## 🛠️ Potential Enhancements
 
 - Add support for forecasting weather data.
-- Implement error handling for different API failure scenarios.
-- Build a graphical interface for a more interactive experience.
+- Implement caching to reduce API calls for frequently requested cities.
+- Add user authentication to allow saving favorite cities.
+- Implement a responsive design for better mobile experience.
 
 ## 👨‍💻 Author
 
@@ -78,8 +101,12 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📦 Dependencies
 
-This project's dependencies are listed in the `requirements.txt` file. You can install them using pip as described in the "How to Use" section.
+This project's dependencies are listed in the `requirements.txt` file. Key dependencies include:
 
+- Flask
+- Requests
+- Python-dotenv
+- Waitress
 
 ## 📞 Support
 
